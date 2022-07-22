@@ -1,5 +1,13 @@
+from encodings import utf_8
 import discord
 from discord.ext import commands
+import json
+import random
+import os
+
+with open('setting.json', mode = 'r', encoding = 'utf8') as jfile:
+    jdata = json.load(jfile)
+
 intents = discord.Intents.default()
 intents.members = True
 bot = commands.Bot(command_prefix='!',intents = intents)
@@ -8,14 +16,27 @@ bot = commands.Bot(command_prefix='!',intents = intents)
 async def on_ready():
     print("Ready!")
 
-@bot.event
-async def on_member_join(member):
-    channel = bot.get_channel(767679195698429965)
-    await channel.send(f'新的臭ㄐㄐ{member}加入了!')
+@bot.command()
+async def load(ctx,extension):
+    bot.load_extension(f'cmds.{extension}')
+    print(f'{extension} loaded')
+    await ctx.message.delete()
 
-@bot.event
-async def on_member_remove(member):
-    channel = bot.get_channel(767679195698429965)
-    await channel.send(f'臭ㄐㄐ{member}離我們而去了...')
+@bot.command()
+async def reload(ctx,extension):
+    bot.reload_extension(f'cmds.{extension}')
+    print(f'{extension} reloaded')
+    await ctx.message.delete()
 
-bot.run('OTk1ODc3MjgzNjE5NDE0MDY2.Gep9pL.p6RMheEFP63XrbCRDMS6TvErNs78s754PlHOo0')
+@bot.command()
+async def unload(ctx,extension):
+    bot.unload_extension(f'cmds.{extension}')
+    print(f'{extension} unloaded')
+    await ctx.message.delete()
+
+for filename in os.listdir('./cmds'):
+    if(filename.endswith('.py')):
+        bot.load_extension(f'cmds.{filename[:-3]}')
+
+if __name__ == "__main__":
+    bot.run(jdata['TOKEN'])
