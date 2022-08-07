@@ -27,6 +27,7 @@ class Event(cog_extension):
                 await msg.channel.send('沒錯蔡神最帥了')
             else:
                 await msg.channel.send('並沒有，蔡神比較帥')
+                await asyncio.sleep(2.5)
                 tmp = await msg.channel.send('其實我比較帥')
                 await asyncio.sleep(2.5)
                 await tmp.delete()
