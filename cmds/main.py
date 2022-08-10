@@ -1,14 +1,12 @@
 from datetime import datetime
 import discord
 from discord.ext import commands
-from core.classes import cog_extension
 
 numbers = ("1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟")
 
-class Main(cog_extension):
-    @commands.command()
-    async def ping(self,ctx):
-        await ctx.send(f'{round(self.bot.latency*1000)} (ms)')
+class Main(commands.Cog):
+    def __init__(self,bot :commands.Bot) -> None:
+        self.bot = bot
 
     @commands.command()
     async def poll(self,ctx,question,*options):
@@ -41,7 +39,18 @@ class Main(cog_extension):
         await ctx.message.delete()
         now = datetime.now()
         await channel.send(f'{now} 蔡神字串新增: {new}')
-        await channel.send(f'現在蔡神字串有{len(msg.content)}字')
+        await channel.send(f'現在蔡神字串有{len(msg.content+new)}字')
+
+    @commands.command()
+    async def 黃神字串(self,ctx,new:str):
+        msgid = 1006532798548553818
+        channel = self.bot.get_channel(767679195698429965)
+        msg = await ctx.fetch_message(msgid)
+        await msg.edit(content = msg.content + new)
+        await ctx.message.delete()
+        now = datetime.now()
+        await channel.send(f'{now} 黃神字串新增: {new}')
+        await channel.send(f'現在黃神字串有{len(msg.content+new)}字')
         
-def setup(bot):
-    bot.add_cog(Main(bot))
+async def setup(bot):
+    await bot.add_cog(Main(bot))

@@ -1,9 +1,11 @@
 import discord
 from discord.ext import commands
-from core.classes import cog_extension
 from openpyxl import load_workbook
 
-class Genshin(cog_extension):
+class Genshin(commands.Cog):
+    def __init__(self,bot :commands.Bot) -> None:
+        self.bot = bot
+        
     @commands.command()
     async def 原神(self,ctx,name,option):
         if(option == '突破'):
@@ -70,5 +72,5 @@ class Genshin(cog_extension):
 
                         
 
-def setup(bot):
-    bot.add_cog(Genshin(bot))
+async def setup(bot):
+    await bot.add_cog(Genshin(bot))

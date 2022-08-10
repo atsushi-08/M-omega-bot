@@ -1,13 +1,19 @@
 import discord
 from discord.ext import commands
-from core.classes import cog_extension
 import json
 import asyncio
 
 with open('setting.json', mode = 'r', encoding = 'utf8') as jfile:
     jdata = json.load(jfile)
 
-class Event(cog_extension):
+class Event(commands.Cog):
+    def __init__(self,bot :commands.Bot) -> None:
+        self.bot = bot
+    
+    @commands.command()
+    async def ping(self,ctx):
+        await ctx.send(f'{round(self.bot.latency*1000)} (ms)')
+
     @commands.Cog.listener()
     async def on_member_join(self,member):
         channel = self.bot.get_channel(int(jdata['CHANNEL']))
@@ -27,9 +33,9 @@ class Event(cog_extension):
                 await msg.channel.send('沒錯蔡神最帥了')
             else:
                 await msg.channel.send('並沒有，蔡神比較帥')
-                await asyncio.sleep(2.5)
+                await asyncio.sleep(1)
                 tmp = await msg.channel.send('其實我比較帥')
-                await asyncio.sleep(2.5)
+                await asyncio.sleep(2)
                 await tmp.delete()
         if msg.content == 'ㄞ' or msg.content == '跪':
             pic = discord.File(jdata['dalao_pic'])
@@ -42,5 +48,10 @@ class Event(cog_extension):
         if '月貓' in msg.content:
             await msg.channel.send('月貓生日快樂')
 
-def setup(bot):
-    bot.add_cog(Event(bot))
+    @commands.Cog.listener()
+    async def on_reaction_add(self,reaction,user):
+        if reaction.emoji == '🤬' or '😡':
+            await reaction.message.channel.send('誰又在亂怒')
+
+async def setup(bot:commands.Bot) -> None:
+    await bot.add_cog(Event(bot))

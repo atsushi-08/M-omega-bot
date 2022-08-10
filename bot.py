@@ -1,42 +1,27 @@
-from encodings import utf_8
+import asyncio
 import discord
 from discord.ext import commands
 import json
-import random
 import os
 
 with open('setting.json', mode = 'r', encoding = 'utf8') as jfile:
     jdata = json.load(jfile)
 
-intents = discord.Intents.default()
-intents.members = True
-bot = commands.Bot(command_prefix='!',intents = intents)
+class Mybot(commands.Bot):
+    def __init__(self):
+        super().__init__(
+            command_prefix = '!',
+            intents = discord.Intents.all(),
+            application_id = jdata["app_id"])
 
-@bot.event
-async def on_ready():
-    print("Ready!")
+    async def setup_hook(self):
+        await self.load_extension(f"cmds.event")
+        await self.load_extension(f"cmds.main")
+        await self.load_extension(f"cmds.react")
+        await self.load_extension(f"cmds.genshin")
 
-@bot.command()
-async def load(ctx,extension):
-    bot.load_extension(f'cmds.{extension}')
-    print(f'{extension} loaded')
-    await ctx.message.delete()
+    async def on_ready(self):
+        print("Ready!")
 
-@bot.command()
-async def reload(ctx,extension):
-    bot.reload_extension(f'cmds.{extension}')
-    print(f'{extension} reloaded')
-    await ctx.message.delete()
-
-@bot.command()
-async def unload(ctx,extension):
-    bot.unload_extension(f'cmds.{extension}')
-    print(f'{extension} unloaded')
-    await ctx.message.delete()
-
-for filename in os.listdir('./cmds'):
-    if(filename.endswith('.py')):
-        bot.load_extension(f'cmds.{filename[:-3]}')
-
-if __name__ == "__main__":
-    bot.run(jdata['TOKEN'])
+bot = Mybot()
+bot.run(jdata["TOKEN"])
