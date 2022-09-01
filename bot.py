@@ -1,8 +1,6 @@
-import asyncio
 import discord
 from discord.ext import commands
 import json
-import os
 
 with open('setting.json', mode = 'r', encoding = 'utf8') as jfile:
     jdata = json.load(jfile)
@@ -15,10 +13,11 @@ class Mybot(commands.Bot):
             application_id = jdata["app_id"])
 
     async def setup_hook(self):
-        await self.load_extension(f"cmds.event")
-        await self.load_extension(f"cmds.main")
-        await self.load_extension(f"cmds.react")
-        await self.load_extension(f"cmds.genshin")
+        await self.load_extension("cmds.event")
+        await self.load_extension("cmds.main")
+        await self.load_extension("cmds.react")
+        await self.load_extension("cmds.genshin")
+        await self.load_extension("cmds.chunithm")
 
     async def on_ready(self):
         print("Ready!")

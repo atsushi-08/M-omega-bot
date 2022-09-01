@@ -47,11 +47,16 @@ class Event(commands.Cog):
             await msg.channel.send('這裡是音遊人均學霸')
         if '月貓' in msg.content:
             await msg.channel.send('月貓生日快樂')
-
-    @commands.Cog.listener()
-    async def on_reaction_add(self,reaction,user):
-        if reaction.emoji == '🤬' or '😡':
-            await reaction.message.channel.send('誰又在亂怒')
+        if '郭' in msg.content or msg.author.id == 603522753303281667:
+            if msg.content.startswith('!'):
+                return
+            await msg.channel.send('謝謝郭神')
+        if '蔡' in msg.content or msg.author.id == 560457069480640518:
+            if msg.content.startswith('!'):
+                return
+            await msg.channel.send('蔡神什麼時候女裝')
+        if 'frums' in msg.content or 'Frums' in msg.content:
+            await msg.channel.send('好難聽')
 
 async def setup(bot:commands.Bot) -> None:
     await bot.add_cog(Event(bot))
