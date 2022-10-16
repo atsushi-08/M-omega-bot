@@ -51,6 +51,15 @@ class Main(commands.Cog):
         now = datetime.now()
         await channel.send(f'{now} 黃神字串新增: {new}')
         await channel.send(f'現在黃神字串有{len(msg.content+new)}字')
+
+    @commands.command()
+    async def 蔡神歐洲(self,ctx,new:str):
+        msgid = 1025759331993530469
+        channel = self.bot.get_channel(767679195698429965)
+        msg = await ctx.fetch_message(msgid)
+        await msg.edit(content = msg.content + '\n' + new)
+        await ctx.message.delete()
+        await channel.send(f"蔡神的歐洲事蹟又增加啦！\n祂{new}\n謝謝蔡團長海放")
         
 async def setup(bot):
     await bot.add_cog(Main(bot))
