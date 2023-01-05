@@ -1,6 +1,7 @@
 from datetime import datetime
 import discord
 from discord.ext import commands
+import random
 
 numbers = ("1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟")
 
@@ -61,5 +62,11 @@ class Main(commands.Cog):
         await ctx.message.delete()
         await channel.send(f"蔡神的歐洲事蹟又增加啦！\n祂{new}\n謝謝蔡團長海放")
         
+    @commands.command()
+    async def 隨機數(self,ctx,low:float,high:float):
+        num = round(random.uniform(low*10,high*10))/10
+        await ctx.send(f'抽到{round(num,1)}')
+
+
 async def setup(bot):
     await bot.add_cog(Main(bot))

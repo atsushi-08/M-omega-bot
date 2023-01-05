@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import json
 import asyncio
+import random
 
 with open('setting.json', mode = 'r', encoding = 'utf8') as jfile:
     jdata = json.load(jfile)
@@ -50,7 +51,13 @@ class Event(commands.Cog):
         if '郭' in msg.content or msg.author.id == 603522753303281667:
             if msg.content.startswith('!'):
                 return
-            await msg.channel.send('謝謝郭神')
+            list = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,2]
+            a = random.choices(list)
+            if a[0]<2:
+                await msg.channel.send('謝謝郭神')
+            else:
+                pic = discord.File(jdata['kuo_img'])
+                await msg.channel.send(file=pic)
         if '蔡' in msg.content or msg.author.id == 560457069480640518:
             if msg.content.startswith('!'):
                 return
