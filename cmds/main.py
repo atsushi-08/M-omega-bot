@@ -67,6 +67,13 @@ class Main(commands.Cog):
         num = round(random.uniform(low*10,high*10))/10
         await ctx.send(f'抽到{round(num,1)}')
 
+    @commands.command()
+    async def test(self,ctx):
+        embed = discord.Embed(title="測試")
+        embed.set_image(url="https://img.gamewith.jp/article_tools/shadowverse/gacha/381276_i.png")
+        await ctx.send(embed=embed)
+
+
 
 async def setup(bot):
     await bot.add_cog(Main(bot))
