@@ -2,6 +2,7 @@ from datetime import datetime
 import discord
 from discord.ext import commands
 import random
+import time
 
 numbers = ("1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟")
 
@@ -63,16 +64,19 @@ class Main(commands.Cog):
         await channel.send(f"蔡神的歐洲事蹟又增加啦！\n祂{new}\n謝謝蔡團長海放")
         
     @commands.command()
-    async def 隨機數(self,ctx,low:float,high:float):
-        num = round(random.uniform(low*10,high*10))/10
-        await ctx.send(f'抽到{round(num,1)}')
+    async def 隨機(self,ctx,*options):
+        await ctx.send(random.choice(options))
 
     @commands.command()
-    async def test(self,ctx):
-        embed = discord.Embed(title="測試")
-        embed.set_image(url="https://img.gamewith.jp/article_tools/shadowverse/gacha/381276_i.png")
-        await ctx.send(embed=embed)
-
+    async def call(self,ctx,string:str,repeat:int,gap:int): 
+        for i in range(repeat):
+            if repeat > 10:
+                await ctx.send("為防止洗版，上限為10次")
+            elif gap > 60:
+                await ctx.send("間隔不得超過1分鐘，沒有為什麼，因為我爽")
+            else:
+                await ctx.send(string)
+                time.sleep(gap)
 
 
 async def setup(bot):

@@ -9,11 +9,6 @@ with open('setting.json', mode = 'r', encoding = 'utf8') as jfile:
 class React(commands.Cog):
     def __init__(self,bot :commands.Bot) -> None:
         self.bot = bot
-        
-    @commands.command()
-    async def 跪(self,ctx):
-        pic = discord.File(jdata['dalao_pic'])
-        await ctx.send(file=pic)
     
     @commands.command()
     async def button_test(self,ctx):

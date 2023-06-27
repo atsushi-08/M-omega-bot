@@ -16,16 +16,6 @@ class Event(commands.Cog):
         await ctx.send(f'{round(self.bot.latency*1000)} (ms)')
 
     @commands.Cog.listener()
-    async def on_member_join(self,member):
-        channel = self.bot.get_channel(int(jdata['CHANNEL']))
-        await channel.send(f'新的臭ㄐㄐ{member}加入了!')
-
-    @commands.Cog.listener()
-    async def on_member_remove(self,member):
-        channel = self.bot.get_channel(int(jdata['CHANNEL']))
-        await channel.send(f'臭ㄐㄐ{member}離我們而去了...')
-
-    @commands.Cog.listener()
     async def on_message(self,msg):
         if msg.author == self.bot.user:
             return
@@ -39,7 +29,7 @@ class Event(commands.Cog):
                 await asyncio.sleep(2)
                 await tmp.delete()
         if msg.content == 'ㄞ' or msg.content == '跪':
-            pic = discord.File(jdata['dalao_pic'])
+            pic = discord.File("C:\\Users\\morris\\Desktop\\BOT\\discordbot\\cmds\\dalao.gif")
             await msg.channel.send(file=pic)
         if msg.content == '這裡是哪裡':
             tmp = await msg.channel.send('這裡是男同俱樂部')
