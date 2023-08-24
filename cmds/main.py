@@ -3,6 +3,10 @@ import discord
 from discord.ext import commands
 import random
 import time
+import sys
+sys.path.append('../discordbot')
+from discordbot import homo
+
 
 numbers = ("1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟")
 
@@ -77,6 +81,13 @@ class Main(commands.Cog):
             else:
                 await ctx.send(string)
                 time.sleep(gap)
+
+    
+
+    @commands.command()
+    async def 惡臭(self,ctx,n:int):
+        await ctx.send(homo.homofy(n))
+
 
 
 async def setup(bot):
